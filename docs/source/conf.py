@@ -74,6 +74,8 @@ exclude_patterns = []
 pygments_style = None
 
 
+autodoc_mock_imports = ['yaks']
+
 # -- Options for HTML output -------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
