@@ -2,6 +2,7 @@
 [![License](https://img.shields.io/badge/License-EPL%202.0-blue)](https://choosealicense.com/licenses/epl-2.0/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Documentation Status](https://readthedocs.org/projects/eclipse-fog05-python3-sdk/badge/?version=latest)](https://eclipse-fog05-python3-sdk.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.com/eclipse-fog05/sdk-python.svg?branch=master)](https://travis-ci.com/eclipse-fog05/sdk-python)
 
 # Eclispe fog05 SDK Python
 
