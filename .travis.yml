@@ -12,11 +12,12 @@ python:
 
 
 before_install:
-  - sudo apt-get install -y libev4 python3-pip
+  - sudo apt-get install -y libev4 python3-pip python3-setuptools
+  - sudo pip3 install pyang pyangbind
   - git clone https://github.com/atolab/zenoh-c && cd zenoh-c && git checkout 0.3.0 && make && sudo make install && cd ..
   - git clone https://github.com/atolab/zenoh-python && cd zenoh-python && git checkout 0.3.0 && sudo python3 setup.py install && cd ..
   - git clone https://github.com/atolab/yaks-python && cd yaks-python && git checkout 0.3.0 && sudo make install && cd ..
-  - sudo pip3 install pyang pyangbind
+
 install:
   - sudo make install
 
