@@ -19,6 +19,7 @@ before_install:
   - git clone https://github.com/atolab/yaks-python && cd yaks-python && git checkout 0.3.0 && sudo make install && cd ..
 
 install:
+  - make
   - sudo make install
 
 script:
