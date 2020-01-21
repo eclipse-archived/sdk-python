@@ -25,9 +25,9 @@ setup(
     packages=['fog05_sdk','fog05_sdk.interfaces', 'fog05_sdk.types'],
     description='Eclipse fog05 Python 3 SDK',
     url='https://fog05.io',
-    authon_email='gabriele.baldoni@adlinktech.com',
+    author_email='gabriele.baldoni@adlinktech.com',
     license='Apache 2.O or EPL 2.0',
-    install_requires=['yaks==0.3.0.alpha', 'jsonschema','mvar==0.0.1'],
+    install_requires=['yaks==0.3.0.alpha', 'jsonschema','mvar==0.0.1', 'pyangbind==0.8.1'],
     scripts=[],
     include_package_data=True
 )
