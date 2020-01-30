@@ -421,7 +421,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_userid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_userid_from_path(x.get_path()), res)
         return list(xs)
 
     # Tenants
@@ -431,7 +431,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_tenantid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_tenantid_from_path(x.get_path()), res)
         return list(xs)
 
     def get_all_nodes(self, sysid, tenantid):
@@ -439,7 +439,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_nodeid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_nodeid_from_path(x.get_path()), res)
         return list(xs)
 
     def get_node_info(self, sysid, tenantid, nodeid):
@@ -478,7 +478,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -503,7 +503,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_entity_id_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_entity_id_from_path(x.get_path()), res)
             return list(xs)
 
     def get_catalog_entity_info(self, sysid, tenantid, eid):
@@ -529,7 +529,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -542,7 +542,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_aeid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_aeid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_catalog_atomic_entity_info(self, sysid, tenantid, aeid):
@@ -568,7 +568,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -581,7 +581,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -595,7 +595,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_fduid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_fduid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_catalog_fdu_info(self, sysid, tenantid, fduid):
@@ -621,7 +621,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -637,7 +637,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: (self.extract_entity_id_from_path(x[0]),self.extract_entity_instanceid_from_path(x[0])), res)
+            xs = map(lambda x: (self.extract_entity_id_from_path(x.get_path()),self.extract_entity_instanceid_from_path(x.get_path())), res)
             return list(xs)
 
     def get_records_all_entity_instances(self, sysid, tenantid, eid):
@@ -646,7 +646,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_entity_instanceid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_entity_instanceid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_records_entity_info(self, sysid, tenantid, eid, instanceid):
@@ -672,7 +672,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -685,7 +685,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: (self.extract_aeid_from_path(x[0]),self.extract_atomic_entity_instanceid_from_path(x[0])), res)
+            xs = map(lambda x: (self.extract_aeid_from_path(x.get_path()),self.extract_atomic_entity_instanceid_from_path(x.get_path())), res)
             return list(xs)
 
     def get_records_all_atomic_entity_instances(self, sysid, tenantid, aeid):
@@ -694,7 +694,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_atomic_entity_instanceid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_atomic_entity_instanceid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_records_atomic_entity_info(self, sysid, tenantid, aeid, instanceid):
@@ -720,7 +720,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -742,7 +742,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -755,7 +755,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_node_fduid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_node_fduid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_node_fdu_instances(self, sysid, tenantid, nodeid, fduid):
@@ -763,10 +763,10 @@ class GAD(object):
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return []
-        xs = map(lambda x: (self.extract_nodeid_from_path(x[0]),
-                    self.extract_node_fduid_from_path(x[0]),
-                    self.extract_node_instanceid_from_path(x[0]),
-                    json.loads(kvs[0][1].get_value())), kvs)
+        xs = map(lambda x: (self.extract_nodeid_from_path(x.get_path()),
+                    self.extract_node_fduid_from_path(x.get_path()),
+                    self.extract_node_instanceid_from_path(x.get_path()),
+                    json.loads(kvs[0].value.get_value())), kvs)
         return list(xs)
 
     def get_node_fdu_instance(self, sysid, tenantid, nodeid, instanceid):
@@ -774,21 +774,21 @@ class GAD(object):
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def get_fdu_instance_node(self, sysid, tenantid, instanceid):
         p = self.get_node_fdu_info_path(sysid, tenantid, '*', '*', instanceid)
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return None
-        return self.extract_nodeid_from_path(kvs[0][0])
+        return self.extract_nodeid_from_path(kvs[0].get_path())
 
     def get_node_fdu(self, sysid, tenantid, nodeid, fduid, instanceid):
         p = self.get_node_fdu_info_path(sysid, tenantid, nodeid, fduid, instanceid)
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def remove_node_fdu(self, sysid, tenantid, nodeid, fduid, instanceid):
         p = self.get_node_fdu_info_path(sysid, tenantid, nodeid, fduid, instanceid)
@@ -799,7 +799,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_nodeid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_nodeid_from_path(x.get_path()), res)
         return list(xs)
 
     # Plugins
@@ -809,7 +809,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_plugin_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_plugin_from_path(x.get_path()), res)
         return list(xs)
 
     def get_plugin_info(self, sysid, tenantid, nodeid, pluginid):
@@ -832,7 +832,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -858,7 +858,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def add_network_port(self, sysid, tenantid, portid, portinfo):
         p = self.get_network_port_info_path(sysid, tenantid, portid)
@@ -882,7 +882,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def add_network_router(self, sysid, tenantid, routerid, routerinfo):
         p = self.get_network_router_info_path(sysid, tenantid, routerid)
@@ -906,7 +906,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def get_all_networks (self, sysid, tenantid):
         p = self.get_all_networks_selector(sysid, tenantid)
@@ -950,7 +950,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     # Node Images
@@ -1035,7 +1035,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     # Node Network
@@ -1050,7 +1050,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def remove_node_network(self, sysid, tenantid, nodeid, netid):
         s = self.get_node_network_info_path(sysid, tenantid, nodeid, netid)
@@ -1081,7 +1081,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     def get_all_nodes_network_ports(self, sysid, tenantid):
@@ -1090,8 +1090,8 @@ class GAD(object):
         if len(res) == 0:
             return []
         xs = map(lambda x:
-         (self.extract_nodeid_from_path(x[0]),
-         self.extract_node_port_id_from_path(x[0]))
+         (self.extract_nodeid_from_path(x.get_path()),
+         self.extract_node_port_id_from_path(x.get_path()))
          ,res)
         return list(xs)
 
@@ -1109,7 +1109,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].value.get_value())
 
     def add_node_network_router(self, sysid, tenantid, nodeid, routerid, routerinfo):
         p = self.get_node_network_router_info_path(sysid, tenantid, nodeid, routerid)
@@ -1135,7 +1135,7 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1696,7 +1696,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1721,7 +1721,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1735,7 +1735,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1784,7 +1784,7 @@ class LAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return []
-        return list(map(lambda x: self.extract_node_instanceid_from_path(x[0]), res))
+        return list(map(lambda x: self.extract_node_instanceid_from_path(x.get_path()), res))
 
     def get_node_all_fdus_instances(self, nodeid):
         p = self.get_node_all_fdus_instances_selector(nodeid)
@@ -1838,7 +1838,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1873,7 +1873,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     def add_node_port(self, nodeid, pluginid, portid, portinfo):
@@ -1899,7 +1899,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1911,7 +1911,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     def add_node_router(self, nodeid, pluginid, routerid, routerinfo):
@@ -1937,7 +1937,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -1949,7 +1949,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     def add_node_floating_ip(self, nodeid, pluginid, ipid, ipinfo):
@@ -1973,7 +1973,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].value.get_value()))
         return d
 
     def observe_node_floating_ip(self, nodeid, pluginid, callback):
@@ -1982,7 +1982,7 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -2084,7 +2084,7 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -2221,7 +2221,7 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
@@ -2253,7 +2253,7 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].value.get_value()
                 if v is not None:
                     callback(json.loads(v.value))
         subid = self.ws.subscribe(s, cb)
