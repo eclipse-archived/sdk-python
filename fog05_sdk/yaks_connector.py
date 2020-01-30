@@ -478,9 +478,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -529,9 +529,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -568,9 +568,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -581,9 +581,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -621,9 +621,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -672,9 +672,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -720,9 +720,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -742,9 +742,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -832,9 +832,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1135,9 +1135,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1696,9 +1696,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1721,9 +1721,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1735,9 +1735,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1838,9 +1838,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1899,9 +1899,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1937,9 +1937,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1982,9 +1982,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2084,9 +2084,9 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2221,9 +2221,9 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2253,9 +2253,9 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0].get_value().get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
