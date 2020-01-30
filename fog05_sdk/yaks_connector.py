@@ -1665,7 +1665,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: json.loads(x[1].get_value()), res)
+        xs = map(lambda x: json.loads(x.value.get_value()), res)
         return list(xs)
 
     def add_node_information(self, nodeid, nodeinfo):
@@ -1791,7 +1791,7 @@ class LAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return []
-        return list(map (lambda x: json.loads(x[1].get_value()), res))
+        return list(map (lambda x: json.loads(x.value.get_value()), res))
 
     # Node Images
 
@@ -2199,7 +2199,7 @@ class CLAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: json.loads(x[1].get_value()), res)
+        xs = map(lambda x: json.loads(x.value.get_value()), res)
         return list(xs)
 
     def add_node_information(self, nodeid, nodeinfo):
