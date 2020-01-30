@@ -844,8 +844,8 @@ class GAD(object):
         p = self.get_node_plugin_eval_path(
             sysid, tenantid, nodeid, pluginid, func_name)
 
-        def cb(path, props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1590,8 +1590,8 @@ class LAD(object):
     def add_os_eval(self, nodeid, func_name, func):
         p = self.get_node_os_exec_path(nodeid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1618,8 +1618,8 @@ class LAD(object):
     def add_nw_eval(self, nodeid, nm_uuid, func_name, func):
         p = self.get_node_nw_exec_path(nodeid, nm_uuid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1646,8 +1646,8 @@ class LAD(object):
     def add_plugin_eval(self, nodeid, pluginid, func_name, func):
         p = self.get_node_plugin_eval_path(nodeid, pluginid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -2154,8 +2154,8 @@ class CLAD(object):
     def add_os_eval(self, nodeid, func_name, func):
         p = self.get_node_os_exec_path(nodeid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -2182,8 +2182,8 @@ class CLAD(object):
     def add_plugin_eval(self, nodeid, pluginid, func_name, func):
         p = self.get_node_plugin_eval_path(nodeid, pluginid, func_name)
 
-        def cb(path, props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
