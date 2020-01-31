@@ -119,6 +119,7 @@ clean-plugin:
 
 clean:
 	$(Q)rm -rf *.gz pyang pyangbind pyang-json-schema-plugin $(OUT_DIR) $(TREES_DIR)
+	$(Q)rm -rf build
 	$(Q)rm -rf
 
 install:

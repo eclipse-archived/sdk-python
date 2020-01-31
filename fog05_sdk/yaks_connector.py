@@ -404,7 +404,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty message list on get_sys_info')
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_sys_config(self, sysid):
@@ -413,7 +413,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty message list on get_sys_config')
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_all_users_ids(self, sysid):
@@ -421,7 +421,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_userid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_userid_from_path(x.get_path()), res)
         return list(xs)
 
     # Tenants
@@ -431,7 +431,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_tenantid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_tenantid_from_path(x.get_path()), res)
         return list(xs)
 
     def get_all_nodes(self, sysid, tenantid):
@@ -439,7 +439,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_nodeid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_nodeid_from_path(x.get_path()), res)
         return list(xs)
 
     def get_node_info(self, sysid, tenantid, nodeid):
@@ -447,7 +447,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty message list on get_node_info')
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_node_info(self, sysid, tenantid, nodeid, nodeinfo):
@@ -464,7 +464,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty message list on get_node_status')
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_node_status(self, sysid, tenantid, nodeid, nodestatus):
@@ -478,9 +478,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -503,7 +503,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_entity_id_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_entity_id_from_path(x.get_path()), res)
             return list(xs)
 
     def get_catalog_entity_info(self, sysid, tenantid, eid):
@@ -511,7 +511,7 @@ class GAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return None
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_catalog_entity_info(self, sysid, tenantid, eid, einfo):
@@ -529,9 +529,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -542,7 +542,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_aeid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_aeid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_catalog_atomic_entity_info(self, sysid, tenantid, aeid):
@@ -550,7 +550,7 @@ class GAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return None
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_catalog_atomic_entity_info(self, sysid, tenantid, aeid, aeinfo):
@@ -568,9 +568,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -581,9 +581,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -595,7 +595,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_fduid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_fduid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_catalog_fdu_info(self, sysid, tenantid, fduid):
@@ -603,7 +603,7 @@ class GAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return None
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_catalog_fdu_info(self, sysid, tenantid, fduid, fduinfo):
@@ -621,9 +621,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -637,7 +637,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: (self.extract_entity_id_from_path(x[0]),self.extract_entity_instanceid_from_path(x[0])), res)
+            xs = map(lambda x: (self.extract_entity_id_from_path(x.get_path()),self.extract_entity_instanceid_from_path(x.get_path())), res)
             return list(xs)
 
     def get_records_all_entity_instances(self, sysid, tenantid, eid):
@@ -646,7 +646,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_entity_instanceid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_entity_instanceid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_records_entity_info(self, sysid, tenantid, eid, instanceid):
@@ -654,7 +654,7 @@ class GAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return None
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_records_entity_info(self, sysid, tenantid, eid, instanceid, aeinfo):
@@ -672,9 +672,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -685,7 +685,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: (self.extract_aeid_from_path(x[0]),self.extract_atomic_entity_instanceid_from_path(x[0])), res)
+            xs = map(lambda x: (self.extract_aeid_from_path(x.get_path()),self.extract_atomic_entity_instanceid_from_path(x.get_path())), res)
             return list(xs)
 
     def get_records_all_atomic_entity_instances(self, sysid, tenantid, aeid):
@@ -694,7 +694,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_atomic_entity_instanceid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_atomic_entity_instanceid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_records_atomic_entity_info(self, sysid, tenantid, aeid, instanceid):
@@ -702,7 +702,7 @@ class GAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return None
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_records_atomic_entity_info(self, sysid, tenantid, aeid, instanceid, aeinfo):
@@ -720,9 +720,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -742,9 +742,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -755,7 +755,7 @@ class GAD(object):
         if len(res) == 0:
             return []
         else:
-            xs = map(lambda x: self.extract_node_fduid_from_path(x[0]), res)
+            xs = map(lambda x: self.extract_node_fduid_from_path(x.get_path()), res)
             return list(xs)
 
     def get_node_fdu_instances(self, sysid, tenantid, nodeid, fduid):
@@ -763,10 +763,10 @@ class GAD(object):
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return []
-        xs = map(lambda x: (self.extract_nodeid_from_path(x[0]),
-                    self.extract_node_fduid_from_path(x[0]),
-                    self.extract_node_instanceid_from_path(x[0]),
-                    json.loads(kvs[0][1].get_value())), kvs)
+        xs = map(lambda x: (self.extract_nodeid_from_path(x.get_path()),
+                    self.extract_node_fduid_from_path(x.get_path()),
+                    self.extract_node_instanceid_from_path(x.get_path()),
+                    json.loads(kvs[0].get_value().get_value())), kvs)
         return list(xs)
 
     def get_node_fdu_instance(self, sysid, tenantid, nodeid, instanceid):
@@ -774,21 +774,21 @@ class GAD(object):
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def get_fdu_instance_node(self, sysid, tenantid, instanceid):
         p = self.get_node_fdu_info_path(sysid, tenantid, '*', '*', instanceid)
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return None
-        return self.extract_nodeid_from_path(kvs[0][0])
+        return self.extract_nodeid_from_path(kvs[0].get_path())
 
     def get_node_fdu(self, sysid, tenantid, nodeid, fduid, instanceid):
         p = self.get_node_fdu_info_path(sysid, tenantid, nodeid, fduid, instanceid)
         kvs = self.ws.get(p)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def remove_node_fdu(self, sysid, tenantid, nodeid, fduid, instanceid):
         p = self.get_node_fdu_info_path(sysid, tenantid, nodeid, fduid, instanceid)
@@ -799,7 +799,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_nodeid_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_nodeid_from_path(x.get_path()), res)
         return list(xs)
 
     # Plugins
@@ -809,7 +809,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: self.extract_plugin_from_path(x[0]), res)
+        xs = map(lambda x: self.extract_plugin_from_path(x.get_path()), res)
         return list(xs)
 
     def get_plugin_info(self, sysid, tenantid, nodeid, pluginid):
@@ -817,7 +817,7 @@ class GAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_node_plugin(self, sysid, tenantid, nodeid, pluginid, plugininfo):
@@ -832,9 +832,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -844,8 +844,8 @@ class GAD(object):
         p = self.get_node_plugin_eval_path(
             sysid, tenantid, nodeid, pluginid, func_name)
 
-        def cb(path, props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -858,7 +858,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def add_network_port(self, sysid, tenantid, portid, portinfo):
         p = self.get_network_port_info_path(sysid, tenantid, portid)
@@ -882,7 +882,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def add_network_router(self, sysid, tenantid, routerid, routerinfo):
         p = self.get_network_router_info_path(sysid, tenantid, routerid)
@@ -906,7 +906,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def get_all_networks (self, sysid, tenantid):
         p = self.get_all_networks_selector(sysid, tenantid)
@@ -942,7 +942,7 @@ class GAD(object):
         if len(res) == 0:
             return None
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_all_images(self, sysid, tenantid):
@@ -950,7 +950,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     # Node Images
@@ -970,7 +970,7 @@ class GAD(object):
         if len(res) == 0:
             return None
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_all_node_images(self, sysid, tenantid, nodeid):
@@ -999,7 +999,7 @@ class GAD(object):
         if len(res) == 0:
             return None
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_all_flavors(self, sysid, tenantid):
@@ -1027,7 +1027,7 @@ class GAD(object):
         if len(res) == 0:
             return None
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_all_node_flavors(self, sysid, tenantid, nodeid):
@@ -1035,7 +1035,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     # Node Network
@@ -1050,7 +1050,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def remove_node_network(self, sysid, tenantid, nodeid, netid):
         s = self.get_node_network_info_path(sysid, tenantid, nodeid, netid)
@@ -1073,7 +1073,7 @@ class GAD(object):
         if len(res) == 0:
             return None
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_all_node_floating_ips(self, sysid, tenantid, nodeid):
@@ -1081,7 +1081,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     def get_all_nodes_network_ports(self, sysid, tenantid):
@@ -1090,8 +1090,8 @@ class GAD(object):
         if len(res) == 0:
             return []
         xs = map(lambda x:
-         (self.extract_nodeid_from_path(x[0]),
-         self.extract_node_port_id_from_path(x[0]))
+         (self.extract_nodeid_from_path(x.get_path()),
+         self.extract_node_port_id_from_path(x.get_path()))
          ,res)
         return list(xs)
 
@@ -1101,7 +1101,7 @@ class GAD(object):
         if len(res) == 0:
             return None
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def get_node_network_router(self, sysid, tenantid, nodeid, routerid):
@@ -1109,7 +1109,7 @@ class GAD(object):
         kvs = self.ws.get(s)
         if len(kvs) == 0:
             return None
-        return json.loads(kvs[0][1].get_value())
+        return json.loads(kvs[0].get_value().get_value())
 
     def add_node_network_router(self, sysid, tenantid, nodeid, routerid, routerinfo):
         p = self.get_node_network_router_info_path(sysid, tenantid, nodeid, routerid)
@@ -1135,9 +1135,9 @@ class GAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1152,7 +1152,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def remove_node_port_from_network(self, sysid, tenantid, nodeid, portid):
         fname = 'remove_port_from_network'
@@ -1162,7 +1162,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def add_node_floatingip(self, sysid, tenantid, nodeid):
         fname = 'create_floating_ip'
@@ -1171,7 +1171,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def remove_node_floatingip(self, sysid, tenantid, nodeid, ipid):
         fname = 'delete_floating_ip'
@@ -1181,7 +1181,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def assign_node_floating_ip(self, sysid, tenantid, nodeid, ipid, cpid):
         fname = 'assign_floating_ip'
@@ -1191,7 +1191,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def retain_node_floating_ip(self, sysid, tenantid, nodeid, ipid, cpid):
         fname = 'remove_floating_ip'
@@ -1201,7 +1201,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def add_port_to_router(self, sysid, tenantid, nodeid, router_id, port_type, vnet_id=None, ip_address=None):
         fname = 'add_router_port'
@@ -1215,7 +1215,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def remove_port_from_router(self, sysid, tenantid, nodeid, router_id, vnet_id):
         fname = 'remove_router_port'
@@ -1225,7 +1225,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def onboard_fdu_from_node(self, sysid, tenantid, nodeid, fdu_id, fdu_info):
         fname = 'onboard_fdu'
@@ -1235,7 +1235,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def define_fdu_in_node(self, sysid, tenantid, nodeid, fdu_id):
         fname = 'define_fdu'
@@ -1245,7 +1245,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def onboard_ae_from_node(self, sysid, tenantid, nodeid, ae_info):
         fname = 'onboard_ae'
@@ -1255,7 +1255,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def instantiate_ae_from_node(self, sysid, tenantid, nodeid, ae_id):
         fname = 'instantiate_ae'
@@ -1265,7 +1265,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def offload_ae_from_node(self, sysid, tenantid, nodeid, ae_id):
         fname = 'offload_ae'
@@ -1275,7 +1275,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def terminate_ae_from_node(self, sysid, tenantid, nodeid, ae_inst_id):
         fname = 'terminate_ae'
@@ -1285,7 +1285,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def onboard_entity_from_node(self, sysid, tenantid, nodeid, e_info):
         fname = 'onboard_entity'
@@ -1295,7 +1295,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def instantiate_entity_from_node(self, sysid, tenantid, nodeid, e_id):
         fname = 'instantiate_entity'
@@ -1305,7 +1305,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def offload_entity_from_node(self, sysid, tenantid, nodeid, e_id):
         fname = 'offload_entity'
@@ -1315,7 +1315,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def terminate_entity_from_node(self, sysid, tenantid, nodeid, e_inst_id):
         fname = 'terminate_entity'
@@ -1325,7 +1325,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
 
     def create_network_in_node(self, sysid, tenantid, nodeid, net_info):
@@ -1336,7 +1336,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def remove_network_from_node(self, sysid, tenantid, nodeid, net_id):
         fname = 'remove_node_network'
@@ -1346,7 +1346,7 @@ class GAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
 
 class LAD(object):
@@ -1590,8 +1590,8 @@ class LAD(object):
     def add_os_eval(self, nodeid, func_name, func):
         p = self.get_node_os_exec_path(nodeid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1604,7 +1604,7 @@ class LAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def exec_os_eval(self, nodeid, func_name, parameters):
         s = self.get_node_os_exec_path_with_params(
@@ -1613,13 +1613,13 @@ class LAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_os_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def add_nw_eval(self, nodeid, nm_uuid, func_name, func):
         p = self.get_node_nw_exec_path(nodeid, nm_uuid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1632,7 +1632,7 @@ class LAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_os_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def exec_plugin_eval(self, nodeid, pluginid, func_name, parameters):
         s = self.get_node_plugin_eval_path_with_params(
@@ -1641,13 +1641,13 @@ class LAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_os_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def add_plugin_eval(self, nodeid, pluginid, func_name, func):
         p = self.get_node_plugin_eval_path(nodeid, pluginid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1665,7 +1665,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: json.loads(x[1].get_value()), res)
+        xs = map(lambda x: json.loads(x.get_value().get_value()), res)
         return list(xs)
 
     def add_node_information(self, nodeid, nodeinfo):
@@ -1682,7 +1682,7 @@ class LAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             raise ValueError('Empty message list on get_node_status')
-        v = res[0][1]
+        v = res[0].get_value()
         return json.loads(v.get_value())
 
     def add_node_status(self, nodeid, nodestatus):
@@ -1696,9 +1696,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1712,7 +1712,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on get_node_configuration')
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def observe_node_plugins(self, nodeid, callback):
         s = self.get_node_plugins_subscriber_selector(nodeid)
@@ -1721,9 +1721,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1735,9 +1735,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1747,14 +1747,14 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on get_node_info')
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def get_node_os_info(self, nodeid):
         s = self.get_node_os_info_path(nodeid)
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on get_node_os_info')
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def add_node_os_info(self, nodeid, osinfo):
         p = self.get_node_os_info_path(nodeid)
@@ -1773,7 +1773,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def remove_node_fdu(self, nodeid, pluginid, fduid, instanceid):
         p = self.get_node_fdu_info_path(nodeid, pluginid, fduid, instanceid)
@@ -1784,14 +1784,14 @@ class LAD(object):
         res = self.ws.get(p)
         if len(res) == 0:
             return []
-        return list(map(lambda x: self.extract_node_instanceid_from_path(x[0]), res))
+        return list(map(lambda x: self.extract_node_instanceid_from_path(x.get_path()), res))
 
     def get_node_all_fdus_instances(self, nodeid):
         p = self.get_node_all_fdus_instances_selector(nodeid)
         res = self.ws.get(p)
         if len(res) == 0:
             return []
-        return list(map (lambda x: json.loads(x[1].get_value()), res))
+        return list(map (lambda x: json.loads(x.get_value().get_value()), res))
 
     # Node Images
 
@@ -1805,7 +1805,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def remove_node_image(self, nodeid, pluginid, imgid):
         p = self.get_node_image_info_path(nodeid, pluginid, imgid)
@@ -1823,7 +1823,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def remove_node_flavor(self, nodeid, pluginid, flvid):
         p = self.get_node_flavor_info_path(nodeid, pluginid, flvid)
@@ -1838,9 +1838,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1855,14 +1855,14 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def find_node_network(self, nodeid, netid):
         s = self.get_node_netwoks_find_selector(nodeid, netid)
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def remove_node_network(self, nodeid, pluginid, netid):
         p = self.get_node_network_info_path(nodeid, pluginid, netid)
@@ -1873,7 +1873,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     def add_node_port(self, nodeid, pluginid, portid, portinfo):
@@ -1890,7 +1890,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def observe_node_ports(self, nodeid, pluginid, callback):
         s = self.get_node_networks_port_selector(nodeid, pluginid)
@@ -1899,9 +1899,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1911,7 +1911,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     def add_node_router(self, nodeid, pluginid, routerid, routerinfo):
@@ -1928,7 +1928,7 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def observe_node_routers(self, nodeid, pluginid, callback):
         s = self.get_node_network_routers_selector(nodeid, pluginid)
@@ -1937,9 +1937,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -1949,7 +1949,7 @@ class LAD(object):
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     def add_node_floating_ip(self, nodeid, pluginid, ipid, ipinfo):
@@ -1966,14 +1966,14 @@ class LAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def get_all_node_floating_ips(self, nodeid, pluginid):
         s = self.get_node_all_network_floating_ips_selector(nodeid, pluginid)
         kvs = self.ws.get(s)
         d = []
         for n in kvs:
-            d.append(json.loads(kvs[0][1].get_value()))
+            d.append(json.loads(kvs[0].get_value().get_value()))
         return d
 
     def observe_node_floating_ip(self, nodeid, pluginid, callback):
@@ -1982,9 +1982,9 @@ class LAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty datas')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2070,7 +2070,7 @@ class CLAD(object):
         if len(res) == 0:
             raise ValueError('Empty message list on get_node_status')
         else:
-            v = res[0][1]
+            v = res[0].get_value()
             return json.loads(v.get_value())
 
     def add_node_status(self, nodeid, nodestatus):
@@ -2084,9 +2084,9 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2120,7 +2120,7 @@ class CLAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_agent_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
 
     # Node Evals
@@ -2154,8 +2154,8 @@ class CLAD(object):
     def add_os_eval(self, nodeid, func_name, func):
         p = self.get_node_os_exec_path(nodeid, func_name)
 
-        def cb(path, **props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -2168,7 +2168,7 @@ class CLAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_os_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def exec_plugin_eval(self, nodeid, pluginid, func_name, parameters):
         s = self.get_node_plugin_eval_path_with_params(
@@ -2177,13 +2177,13 @@ class CLAD(object):
         if len(res) == 0:
             raise ValueError('Empty data on exec_os_eval')
         else:
-            return json.loads(res[0][1].get_value())
+            return json.loads(res[0].get_value().get_value())
 
     def add_plugin_eval(self, nodeid, pluginid, func_name, func):
         p = self.get_node_plugin_eval_path(nodeid, pluginid, func_name)
 
-        def cb(path, props):
-            v = Value(json.dumps(func(**props)), encoding=Encoding.STRING)
+        def cb(path, properties):
+            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -2199,7 +2199,7 @@ class CLAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return []
-        xs = map(lambda x: json.loads(x[1].get_value()), res)
+        xs = map(lambda x: json.loads(x.get_value().get_value()), res)
         return list(xs)
 
     def add_node_information(self, nodeid, nodeinfo):
@@ -2212,7 +2212,7 @@ class CLAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on get_node_configuration')
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def observe_node_plugins(self, nodeid, callback):
         s = self.get_node_plugins_subscriber_selector(nodeid)
@@ -2221,9 +2221,9 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2240,7 +2240,7 @@ class CLAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             return None
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def remove_node_fdu(self, nodeid, pluginid, fduid):
         p = self.get_node_fdu_info_path(nodeid, pluginid, fduid)
@@ -2253,9 +2253,9 @@ class CLAD(object):
             if len(kvs) == 0:
                 raise ValueError('Listener received empty data')
             else:
-                v = kvs[0][1].get_value()
+                v = kvs[0].get_value()
                 if v is not None:
-                    callback(json.loads(v.value))
+                    callback(json.loads(v.get_value()))
         subid = self.ws.subscribe(s, cb)
         self.listeners.append(subid)
         return subid
@@ -2267,14 +2267,14 @@ class CLAD(object):
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on get_node_info')
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def get_node_os_info(self, nodeid):
         s = self.get_node_os_info_path(nodeid)
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on get_node_os_info')
-        return json.loads(res[0][1].get_value())
+        return json.loads(res[0].get_value().get_value())
 
     def add_node_os_info(self, nodeid, osinfo):
         p = self.get_node_os_info_path(nodeid)
