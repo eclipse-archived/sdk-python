@@ -741,9 +741,8 @@ class Plugin(object):
             '''
             res = self.connector.loc.actual.exec_agent_eval(
                 self.node, fname, fparameters)
-            if res.get('error'):
+            if res.get('error') is not None:
                 raise ValueError('Agent Eval returned {}'.format(res.get('error')))
-                # return None
             return res.get('result')
 
         def get_image_info(self, imageid):
@@ -825,7 +824,7 @@ class Plugin(object):
             -------
             string
             '''
-            self.call_agent_function('get_node_mgmt_address', {'node_uuid': nodeid})
+            return self.call_agent_function('get_node_mgmt_address', {'node_uuid': nodeid})
 
 
     def __init__(self, version, plugin_uuid=None):
