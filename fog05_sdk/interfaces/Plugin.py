@@ -780,6 +780,22 @@ class Plugin(object):
             '''
             return self.call_agent_function('get_node_fdu_info', {'fdu_uuid':fduid,'instance_uuid':instanceid,'node_uuid':nodeid})
 
+        def get_fdu_descriptor(self, fduid):
+            '''
+            Gets information about the given FDU
+
+            parameters
+            ----------
+            fduid : string
+                UUID of the FDU
+
+            returns
+            -------
+            dictionary
+
+            '''
+            return self.call_agent_function('get_fdu_info', {'fdu_uuid':fduid})
+
         def get_network_info(self, uuid):
             '''
             Gets information about the given virtual network
