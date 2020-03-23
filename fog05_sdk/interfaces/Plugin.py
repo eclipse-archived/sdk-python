@@ -768,6 +768,17 @@ class Plugin(object):
             '''
             return self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
 
+
+        def get_address_of_interface_in_namespace(self, intf_name, nsname):
+            '''
+            Retrieves the address to the given interface in the the given network namespace
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('get_address_of_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
+
         def remove_address_from_interface_in_namespace(self, intf_name, nsname):
             '''
             Removes the address from the given interface in the the given network namespace

@@ -553,6 +553,16 @@ class NetworkPlugin(Plugin):
         '''
         raise NotImplementedError
 
+    def get_address_of_interface_in_namespace(self, intf_name, nsname):
+        '''
+        Retrieves the address to the given interface in the the given network namespace
+
+        returns
+        -------
+        {'result': dictionary }
+        '''
+        raise NotImplementedError
+
     def remove_address_from_interface_in_namespace(self, intf_name, nsname):
         '''
         Removes the address from the given interface in the the given network namespace
