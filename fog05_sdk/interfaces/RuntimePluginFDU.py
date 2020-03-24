@@ -64,10 +64,10 @@ class RuntimePluginFDU(Plugin):
         flag = False
         while not flag:
             try:
-                res = self.agent.get_node_fdu_info(fduid, instanceid, destinationid)
+                res = self.agent.get_fdu_info(destinationid, fduid, instanceid)
                 while res.get('status') != 'LAND':
                     time.sleep(0.250)
-                    res = self.agent.get_node_fdu_info(fduid, instanceid, destinationid)
+                    res = self.agent.get_fdu_info(destinationid, fduid, instanceid)
                 flag = True
             except:
                 pass

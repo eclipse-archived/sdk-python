@@ -712,6 +712,93 @@ class Plugin(object):
             '''
             return self.call_nw_plugin_function('get_vlan_face',{})
 
+        def create_network_namespace(self):
+                '''
+                Creates a new network namespace, and returns its name
+
+                returns
+                -------
+                {'result':string}
+                '''
+                return self.call_nw_plugin_function('create_network_namespace',{})
+
+        def delete_network_namespace(self, nsname):
+            '''
+            Deletes the given network namespace, and returns its name
+
+            returns
+            -------
+            {'result':string}
+            '''
+            return self.call_nw_plugin_function('delete_network_namespace',{'nsname':nsname})
+
+
+        def create_virtual_interface_in_namespace(self, internal_name, nsname):
+            '''
+            Creates a veth pair in the given network namespace, with the given name for the internal interface
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('create_virtual_interface_in_namespace',{'internal_name':internal_name, 'nsname':nsname})
+
+
+        def delete_virtual_interface_from_namespace(self, internal_name, nsname):
+            '''
+            Deletes the given interface from the the given network namespace
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('delete_virtual_interface_from_namespace',{'internal_name':internal_name, 'nsname':nsname})
+
+
+
+        def assign_address_to_interface_in_namespace(self, intf_name, nsname, address):
+            '''
+            Assigns the given address to the given interface in the the given network namespace
+
+            Address are in the form AAA.AAA.AAA.AAA/NM
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
+
+        def assign_mac_address_to_interface_in_namespace(self, intf_name, nsname, address):
+            '''
+            Assigns the given address to the given interface in the the given network namespace
+
+            Address are in the form AA:BB:CC:DD:EE:FF
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('assign_mac_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
+
+        def get_address_of_interface_in_namespace(self, intf_name, nsname):
+            '''
+            Retrieves the address to the given interface in the the given network namespace
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('get_address_of_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
+
+        def remove_address_from_interface_in_namespace(self, intf_name, nsname):
+            '''
+            Removes the address from the given interface in the the given network namespace
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('remove_address_from_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
+
 
     class Agent(object):
         '''
@@ -741,9 +828,8 @@ class Plugin(object):
             '''
             res = self.connector.loc.actual.exec_agent_eval(
                 self.node, fname, fparameters)
-            if res.get('error'):
+            if res.get('error') is not None:
                 raise ValueError('Agent Eval returned {}'.format(res.get('error')))
-                # return None
             return res.get('result')
 
         def get_image_info(self, imageid):
@@ -780,6 +866,22 @@ class Plugin(object):
 
             '''
             return self.call_agent_function('get_node_fdu_info', {'fdu_uuid':fduid,'instance_uuid':instanceid,'node_uuid':nodeid})
+
+        def get_fdu_descriptor(self, fduid):
+            '''
+            Gets information about the given FDU
+
+            parameters
+            ----------
+            fduid : string
+                UUID of the FDU
+
+            returns
+            -------
+            dictionary
+
+            '''
+            return self.call_agent_function('get_fdu_info', {'fdu_uuid':fduid})
 
         def get_network_info(self, uuid):
             '''
@@ -825,7 +927,7 @@ class Plugin(object):
             -------
             string
             '''
-            self.call_agent_function('get_node_mgmt_address', {'node_uuid': nodeid})
+            return self.call_agent_function('get_node_mgmt_address', {'node_uuid': nodeid})
 
 
     def __init__(self, version, plugin_uuid=None):

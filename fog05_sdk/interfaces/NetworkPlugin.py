@@ -28,6 +28,8 @@ class NetworkPlugin(Plugin):
 
     def __init__(self, version, plugin_uuid):
         super(NetworkPlugin, self).__init__(version, plugin_uuid)
+        self.netns = {}
+        self.ns_index = 0
 
     def wait_dependencies(self):
         '''
@@ -493,6 +495,80 @@ class NetworkPlugin(Plugin):
         returns
         -------
         string
+        '''
+        raise NotImplementedError
+
+
+    def create_network_namespace(self):
+        '''
+        Creates a new network namespace, and returns its name
+
+        returns
+        -------
+        {'result':string}
+        '''
+        raise NotImplementedError
+
+    def delete_network_namespace(self, nsname):
+        '''
+        Deletes the given network namespace, and returns its name
+
+        returns
+        -------
+        {'result':string}
+        '''
+        raise NotImplementedError
+
+
+    def create_virtual_interface_in_namespace(self, internal_name, nsname):
+        '''
+        Creates a veth pair in the given network namespace, with the given name for the internal interface
+
+        returns
+        -------
+        {'result': dictionary }
+        '''
+        raise NotImplementedError
+
+    def delete_virtual_interface_from_namespace(self, internal_name, nsname):
+        '''
+        Deletes the given interface from the the given network namespace
+
+        returns
+        -------
+        {'result': dictionary }
+        '''
+        raise NotImplementedError
+
+
+    def assign_address_to_interface_in_namespace(self, intf_name, nsname, address):
+        '''
+        Assigns the given address to the given interface in the the given network namespace
+
+        Address are in the form AAA.AAA.AAA.AAA/NM
+
+        returns
+        -------
+        {'result': dictionary }
+        '''
+        raise NotImplementedError
+
+    def get_address_of_interface_in_namespace(self, intf_name, nsname):
+        '''
+        Retrieves the address to the given interface in the the given network namespace
+
+        returns
+        -------
+        {'result': dictionary }
+        '''
+        raise NotImplementedError
+
+    def remove_address_from_interface_in_namespace(self, intf_name, nsname):
+        '''
+        Removes the address from the given interface in the the given network namespace
+        returns
+        -------
+        {'result': dictionary }
         '''
         raise NotImplementedError
 

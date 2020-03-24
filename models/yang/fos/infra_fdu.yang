@@ -60,6 +60,7 @@ module infra_fdu {
             enum XEN_UK;
             enum MCU;
             enum DOCKER;
+            enum ROS2;
         }
     }
 
