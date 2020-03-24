@@ -768,6 +768,17 @@ class Plugin(object):
             '''
             return self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
 
+        def assign_mac_address_to_interface_in_namespace(self, intf_name, nsname, address):
+            '''
+            Assigns the given address to the given interface in the the given network namespace
+
+            Address are in the form AA:BB:CC:DD:EE:FF
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('assign_mac_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
 
         def get_address_of_interface_in_namespace(self, intf_name, nsname):
             '''
