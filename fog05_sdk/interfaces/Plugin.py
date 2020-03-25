@@ -756,17 +756,21 @@ class Plugin(object):
 
 
 
-        def assign_address_to_interface_in_namespace(self, intf_name, nsname, address):
+        def assign_address_to_interface_in_namespace(self, intf_name, nsname, address=None):
             '''
             Assigns the given address to the given interface in the the given network namespace
 
-            Address are in the form AAA.AAA.AAA.AAA/NM
+            Address is in the form AAA.AAA.AAA.AAA/NM
 
             returns
             -------
             {'result': dictionary }
             '''
-            return self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
+            if address is None:
+                res = self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
+            else:
+                res = self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
+            return res
 
         def assign_mac_address_to_interface_in_namespace(self, intf_name, nsname, address):
             '''
