@@ -773,7 +773,7 @@ class Plugin(object):
             -------
             {'result': dictionary }
             '''
-            return self.call_nw_plugin_function('attach_interface_to_bridge',{'intf_name':intf_name, 'brname':br_name})
+            return self.call_nw_plugin_function('attach_interface_to_bridge',{'intf_name':intf_name, 'br_name':br_name})
 
         def detach_interface_from_bridge(self, intf_name):
             '''
