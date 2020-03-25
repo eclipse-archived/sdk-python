@@ -764,7 +764,7 @@ class Plugin(object):
             '''
             if nsname is None:
                 nsname = '1'
-            return self.call_nw_plugin_function('delete_virtual_interface_from_namespace',{'intf_name':intf_name, 'nsname':nsname})
+            return self.call_nw_plugin_function('move_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
 
         def attach_interface_to_bridge(self, intf_name, br_name):
             '''
@@ -782,7 +782,7 @@ class Plugin(object):
             -------
             {'result': dictionary }
             '''
-            return self.call_nw_plugin_function('attach_interface_to_bridge',{'intf_name':intf_name})
+            return self.call_nw_plugin_function('detach_interface_from_bridge',{'intf_name':intf_name})
 
 
         def assign_address_to_interface_in_namespace(self, intf_name, nsname, address=None):
