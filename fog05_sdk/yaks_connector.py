@@ -1630,7 +1630,7 @@ class LAD(object):
             nodeid, nm_uuid, func_name, parameters)
         res = self.ws.get(s)
         if len(res) == 0:
-            raise ValueError('Empty data on exec_os_eval')
+            raise ValueError('Empty data on exec_nw_eval')
         else:
             return json.loads(res[0].get_value().get_value())
 
@@ -1639,7 +1639,7 @@ class LAD(object):
             nodeid, pluginid, func_name, parameters)
         res = self.ws.get(s)
         if len(res) == 0:
-            raise ValueError('Empty data on exec_os_eval')
+            raise ValueError('Empty data on exec_plugin_eval')
         else:
             return json.loads(res[0].get_value().get_value())
 
