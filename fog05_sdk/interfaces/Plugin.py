@@ -755,6 +755,35 @@ class Plugin(object):
             return self.call_nw_plugin_function('delete_virtual_interface_from_namespace',{'internal_name':internal_name, 'nsname':nsname})
 
 
+        def move_interface_in_namespace(self, intf_name, nsname=None):
+            '''
+            Moves the given interface into the the given network namespace, nsname is optional if none moves the interface to the default namespace
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            if nsname is None:
+                nsname = '1'
+            return self.call_nw_plugin_function('delete_virtual_interface_from_namespace',{'intf_name':intf_name, 'nsname':nsname})
+
+        def attach_interface_to_bridge(self, intf_name, br_name):
+            '''
+            Attaches the given interface to the given bridge
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('attach_interface_to_bridge',{'intf_name':intf_name, 'brname':br_name})
+
+        def detach_interface_from_bridge(self, intf_name):
+            '''
+            Detaches the interface from the current connected bridge
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('attach_interface_to_bridge',{'intf_name':intf_name})
+
 
         def assign_address_to_interface_in_namespace(self, intf_name, nsname, address=None):
             '''
