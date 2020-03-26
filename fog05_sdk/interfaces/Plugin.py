@@ -712,6 +712,29 @@ class Plugin(object):
             '''
             return self.call_nw_plugin_function('get_vlan_face',{})
 
+
+        def create_macvlan_interface(self, master_intf):
+            '''
+            Creates a macvlan interface over the given master interface
+
+            returns
+            -------
+            {'result': string }
+            '''
+
+            return self.call_nw_plugin_function('create_macvlan_interface',{'master_intf': master_intf})
+
+        def delete_macvlan_interface(self, intf_name, netns='1'):
+            '''
+            Deletes the given macvlan interface
+
+            returns
+            -------
+            {'result': string }
+            '''
+
+            return self.call_nw_plugin_function('delete_macvlan_interface',{'intf_name':intf_name,'netns':netns})
+
         def create_network_namespace(self):
                 '''
                 Creates a new network namespace, and returns its name
@@ -742,6 +765,19 @@ class Plugin(object):
             {'result': dictionary }
             '''
             return self.call_nw_plugin_function('create_virtual_interface_in_namespace',{'internal_name':internal_name, 'nsname':nsname})
+
+        def rename_virtual_interface_in_namespace(self, name, newname, nsname=None):
+            '''
+            Renames the given interface in the given namespace
+
+            returns
+            -------
+            {'result': string }
+            '''
+
+            if nsname is None:
+                nsname = '1'
+            return self.call_nw_plugin_function('rename_virtual_interface_in_namespace',{'name':name,'newname':newname, 'nsname':nsname})
 
 
         def delete_virtual_interface_from_namespace(self, internal_name, nsname):
