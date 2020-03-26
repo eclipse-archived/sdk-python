@@ -713,6 +713,28 @@ class Plugin(object):
             return self.call_nw_plugin_function('get_vlan_face',{})
 
 
+        def create_connection_point(self, descriptor):
+            '''
+            Creates a connection point from the given descriptor
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+
+            return self.call_nw_plugin_function('create_port_agent',{'descriptor': descriptor})
+
+        def remove_connection_point(self, cp_id):
+            '''
+            Deletes the given connection point
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+
+            return self.call_nw_plugin_function('destroy_port_agent',{'cp_id':cp_id})
+
         def create_macvlan_interface(self, master_intf):
             '''
             Creates a macvlan interface over the given master interface
