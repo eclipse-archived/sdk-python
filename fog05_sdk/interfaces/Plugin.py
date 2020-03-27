@@ -712,6 +712,51 @@ class Plugin(object):
             '''
             return self.call_nw_plugin_function('get_vlan_face',{})
 
+
+        def create_connection_point(self, descriptor):
+            '''
+            Creates a connection point from the given descriptor
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+
+            return self.call_nw_plugin_function('create_port_agent',{'descriptor': descriptor})
+
+        def remove_connection_point(self, cp_id):
+            '''
+            Deletes the given connection point
+
+            returns
+            -------
+            {'result': dictionary }
+            '''
+
+            return self.call_nw_plugin_function('destroy_port_agent',{'cp_id':cp_id})
+
+        def create_macvlan_interface(self, master_intf):
+            '''
+            Creates a macvlan interface over the given master interface
+
+            returns
+            -------
+            {'result': string }
+            '''
+
+            return self.call_nw_plugin_function('create_macvlan_interface',{'master_intf': master_intf})
+
+        def delete_macvlan_interface(self, intf_name, netns='1'):
+            '''
+            Deletes the given macvlan interface
+
+            returns
+            -------
+            {'result': string }
+            '''
+
+            return self.call_nw_plugin_function('delete_macvlan_interface',{'intf_name':intf_name,'netns':netns})
+
         def create_network_namespace(self):
                 '''
                 Creates a new network namespace, and returns its name
@@ -743,6 +788,19 @@ class Plugin(object):
             '''
             return self.call_nw_plugin_function('create_virtual_interface_in_namespace',{'internal_name':internal_name, 'nsname':nsname})
 
+        def rename_virtual_interface_in_namespace(self, name, newname, nsname=None):
+            '''
+            Renames the given interface in the given namespace
+
+            returns
+            -------
+            {'result': string }
+            '''
+
+            if nsname is None:
+                nsname = '1'
+            return self.call_nw_plugin_function('rename_virtual_interface_in_namespace',{'name':name,'newname':newname, 'nsname':nsname})
+
 
         def delete_virtual_interface_from_namespace(self, internal_name, nsname):
             '''
@@ -755,18 +813,51 @@ class Plugin(object):
             return self.call_nw_plugin_function('delete_virtual_interface_from_namespace',{'internal_name':internal_name, 'nsname':nsname})
 
 
+        def move_interface_in_namespace(self, intf_name, nsname=None):
+            '''
+            Moves the given interface into the the given network namespace, nsname is optional if none moves the interface to the default namespace
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            if nsname is None:
+                nsname = '1'
+            return self.call_nw_plugin_function('move_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
 
-        def assign_address_to_interface_in_namespace(self, intf_name, nsname, address):
+        def attach_interface_to_bridge(self, intf_name, br_name):
+            '''
+            Attaches the given interface to the given bridge
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('attach_interface_to_bridge',{'intf_name':intf_name, 'br_name':br_name})
+
+        def detach_interface_from_bridge(self, intf_name):
+            '''
+            Detaches the interface from the current connected bridge
+            returns
+            -------
+            {'result': dictionary }
+            '''
+            return self.call_nw_plugin_function('detach_interface_from_bridge',{'intf_name':intf_name})
+
+
+        def assign_address_to_interface_in_namespace(self, intf_name, nsname, address=None):
             '''
             Assigns the given address to the given interface in the the given network namespace
 
-            Address are in the form AAA.AAA.AAA.AAA/NM
+            Address is in the form AAA.AAA.AAA.AAA/NM
 
             returns
             -------
             {'result': dictionary }
             '''
-            return self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
+            if address is None:
+                res = self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname})
+            else:
+                res = self.call_nw_plugin_function('assign_address_to_interface_in_namespace',{'intf_name':intf_name, 'nsname':nsname, 'address':address})
+            return res
 
         def assign_mac_address_to_interface_in_namespace(self, intf_name, nsname, address):
             '''

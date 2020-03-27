@@ -19,7 +19,7 @@ from setuptools import setup
 
 setup(
     name='fog05-sdk',
-    version='0.1.0',
+    version='0.2.0a',
     python_requires='>=3',
     author='ADLINK',
     packages=['fog05_sdk','fog05_sdk.interfaces', 'fog05_sdk.types'],
