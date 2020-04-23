@@ -189,6 +189,42 @@ class GAD(object):
                                       'nodes', '*', 'fdu', '*', 'instances',
                                       instid, 'info'])
 
+    def get_fdu_run_instance_selector(self, sysid, tenantid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', '*', 'fdu', '*', 'instances',
+                                      instid, 'run'])
+
+    def get_fdu_log_instance_selector(self, sysid, tenantid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', '*', 'fdu', '*', 'instances',
+                                      instid, 'log'])
+    def get_fdu_ls_instance_selector(self, sysid, tenantid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', '*', 'fdu', '*', 'instances',
+                                      instid, 'ls'])
+    def get_fdu_file_instance_selector(self, sysid, tenantid, instid, filename):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', '*', 'fdu', '*', 'instances',
+                                      instid, 'get', '?(filename={})'.format(filename)])
+
+    def get_fdu_run_instance_path(self, sysid, tenantid,nodeid, fduid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', nodeid, 'fdu', fduid, 'instances',
+                                      instid, 'run'])
+
+    def get_fdu_log_instance_path(self, sysid, tenantid,nodeid, fduid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', nodeid, 'fdu', fduid, 'instances',
+                                      instid, 'log'])
+    def get_fdu_ls_instance_path(self, sysid, tenantid,nodeid, fduid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', nodeid, 'fdu', fduid, 'instances',
+                                      instid, 'ls'])
+    def get_fdu_file_instance_path(self, sysid, tenantid,nodeid, fduid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', nodeid, 'fdu', fduid, 'instances',
+                                      instid, 'get'])
+
     # Networks
 
     def get_all_networks_selector(self, sysid, tenantid):
@@ -1247,6 +1283,38 @@ class GAD(object):
         else:
             return json.loads(res[0].get_value().get_value())
 
+    def run_fdu_in_node(self, sysid, tenantid, instanceid):
+        s = self.get_fdu_run_instance_selector(sysid, tenantid, instanceid)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on run_fdu_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def log_fdu_in_node(self, sysid, tenantid, instanceid):
+        s = self.get_fdu_log_instance_selector(sysid, tenantid, instanceid)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on log_fdu_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def ls_fdu_in_node(self, sysid, tenantid, instanceid):
+        s = self.get_fdu_ls_instance_selector(sysid, tenantid, instanceid)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on ls_fdu_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def file_fdu_in_node(self, sysid, tenantid, instanceid, filename):
+        s = self.get_fdu_file_instance_selector(sysid, tenantid, instanceid, filename)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on file_fdu_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
     def onboard_ae_from_node(self, sysid, tenantid, nodeid, ae_info):
         fname = 'onboard_ae'
         params = {'descriptor': ae_info}
@@ -1447,6 +1515,46 @@ class LAD(object):
         return Constants.create_path(
             [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
             'instances','*','info'])
+
+    def get_node_fdu_instance_run_selector(self, nodeid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
+                'instances', instanceid, 'run'])
+
+    def get_node_fdu_instance_log_selector(self, nodeid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
+                'instances', instanceid, 'log'])
+
+    def get_node_fdu_instance_ls_selector(self, nodeid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
+                'instances', instanceid, 'ls'])
+
+    def get_node_fdu_instance_file_selector(self, nodeid, instanceid, filename):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
+                'instances', instanceid, 'get', '?(filename={})'.format(filename)])
+
+    def get_node_fdu_instance_run_path (self, nodeid, pluginid, fduid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes',pluginid, 'fdu', fduid,
+                'instances', instanceid, 'run'])
+
+    def get_node_fdu_instance_log_path (self, nodeid, pluginid, fduid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes',pluginid, 'fdu', fduid,
+                'instances', instanceid, 'log'])
+
+    def get_node_fdu_instance_ls_path (self, nodeid, pluginid, fduid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes',pluginid, 'fdu', fduid,
+                'instances', instanceid, 'ls'])
+
+    def get_node_fdu_instance_file_path (self, nodeid, pluginid, fduid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes',pluginid, 'fdu', fduid,
+                'instances', instanceid, 'get'])
 
     # Node Images
 
@@ -1652,6 +1760,70 @@ class LAD(object):
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
+
+    def add_plugin_fdu_run_eval(self, nodeid, pluginid, fduid, instanceid, func):
+        p = self.get_node_fdu_instance_run_path(nodeid, pluginid, fduid, instanceid)
+        def cb(path, properties):
+            v = Value(json.dumps(func()), encoding=Encoding.STRING)
+            return v
+        r = self.ws.register_eval(p, cb)
+        self.evals.append(p)
+        return r
+
+    def add_plugin_fdu_log_eval(self, nodeid, pluginid, fduid, instanceid, func):
+        p = self.get_node_fdu_instance_log_path(nodeid, pluginid, fduid, instanceid)
+        def cb(path, properties):
+            v = Value(json.dumps(func()), encoding=Encoding.STRING)
+            return v
+        r = self.ws.register_eval(p, cb)
+        self.evals.append(p)
+        return r
+
+    def add_plugin_fdu_ls_eval(self, nodeid, pluginid, fduid, instanceid, func):
+        p = self.get_node_fdu_instance_ls_path(nodeid, pluginid, fduid, instanceid)
+        def cb(path, properties):
+            v = Value(json.dumps(func()), encoding=Encoding.STRING)
+            return v
+        r = self.ws.register_eval(p, cb)
+        self.evals.append(p)
+        return r
+
+    def add_plugin_fdu_file_eval(self, nodeid, pluginid, fduid, instanceid, func):
+        p = self.get_node_fdu_instance_file_path(nodeid, pluginid, fduid, instanceid)
+        def cb(path, properties):
+            try:
+                v = Value(json.dumps(func(properties['filename'])), encoding=Encoding.STRING)
+                return v
+            except Exception as e:
+                return Value("", encoding=Encoding.STRING)
+        r = self.ws.register_eval(p, cb)
+        self.evals.append(p)
+        return r
+
+    def remove_plugin_fdu_run_eval(self, nodeid, pluginid, fduid, instanceid):
+        p = self.get_node_fdu_instance_run_path(nodeid, pluginid, fduid, instanceid)
+        r = self.ws.unregister_eval(p)
+        self.evals.remove(p)
+        return r
+
+    def remove_plugin_fdu_log_eval(self, nodeid, pluginid, fduid, instanceid):
+        p = self.get_node_fdu_instance_log_path(nodeid, pluginid, fduid, instanceid)
+        r = self.ws.unregister_eval(p)
+        self.evals.remove(p)
+        return r
+
+    def remove_plugin_fdu_ls_eval(self, nodeid, pluginid, fduid, instanceid):
+        p = self.get_node_fdu_instance_ls_path(nodeid, pluginid, fduid, instanceid)
+        r = self.ws.unregister_eval(p)
+        self.evals.remove(p)
+        return r
+
+    def remove_plugin_fdu_file_eval(self, nodeid, pluginid, fduid, instanceid):
+        p = self.get_node_fdu_instance_file_path(nodeid, pluginid, fduid, instanceid)
+        r = self.ws.unregister_eval(p)
+        self.evals.remove(p)
+        return r
+
 
     # Node
 
