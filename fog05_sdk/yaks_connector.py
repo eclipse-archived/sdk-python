@@ -1764,7 +1764,7 @@ class LAD(object):
     def add_plugin_fdu_run_eval(self, nodeid, pluginid, fduid, instanceid, func):
         p = self.get_node_fdu_instance_run_path(nodeid, pluginid, fduid, instanceid)
         def cb(path, properties):
-            v = Value(json.dumps(func()), encoding=Encoding.STRING)
+            v = Value(json.dumps(func(None)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1773,7 +1773,7 @@ class LAD(object):
     def add_plugin_fdu_log_eval(self, nodeid, pluginid, fduid, instanceid, func):
         p = self.get_node_fdu_instance_log_path(nodeid, pluginid, fduid, instanceid)
         def cb(path, properties):
-            v = Value(json.dumps(func()), encoding=Encoding.STRING)
+            v = Value(json.dumps(func(None)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
@@ -1782,7 +1782,7 @@ class LAD(object):
     def add_plugin_fdu_ls_eval(self, nodeid, pluginid, fduid, instanceid, func):
         p = self.get_node_fdu_instance_ls_path(nodeid, pluginid, fduid, instanceid)
         def cb(path, properties):
-            v = Value(json.dumps(func()), encoding=Encoding.STRING)
+            v = Value(json.dumps(func(None)), encoding=Encoding.STRING)
             return v
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
