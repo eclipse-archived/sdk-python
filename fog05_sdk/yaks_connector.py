@@ -189,10 +189,15 @@ class GAD(object):
                                       'nodes', '*', 'fdu', '*', 'instances',
                                       instid, 'info'])
 
-    def get_fdu_run_instance_selector(self, sysid, tenantid, instid):
+    def get_fdu_start_instance_selector(self, sysid, tenantid, instid, env):
         return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
                                       'nodes', '*', 'fdu', '*', 'instances',
-                                      instid, 'run'])
+                                      instid, 'start', '?(env={})'.format(env)])
+
+    def get_fdu_run_instance_selector(self, sysid, tenantid, instid, env):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', '*', 'fdu', '*', 'instances',
+                                      instid, 'run', '?(env={})'.format(env)])
 
     def get_fdu_log_instance_selector(self, sysid, tenantid, instid):
         return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
@@ -206,6 +211,11 @@ class GAD(object):
         return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
                                       'nodes', '*', 'fdu', '*', 'instances',
                                       instid, 'get', '?(filename={})'.format(filename)])
+
+    def get_fdu_start_instance_path(self, sysid, tenantid,nodeid, fduid, instid):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', nodeid, 'fdu', fduid, 'instances',
+                                      instid, 'start'])
 
     def get_fdu_run_instance_path(self, sysid, tenantid,nodeid, fduid, instid):
         return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
@@ -1283,8 +1293,16 @@ class GAD(object):
         else:
             return json.loads(res[0].get_value().get_value())
 
-    def run_fdu_in_node(self, sysid, tenantid, instanceid):
-        s = self.get_fdu_run_instance_selector(sysid, tenantid, instanceid)
+    def start_fdu_in_node(self, sysid, tenantid, instanceid, env):
+        s = self.get_fdu_start_instance_selector(sysid, tenantid, instanceid, env)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on start_fdu_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def run_fdu_in_node(self, sysid, tenantid, instanceid, env):
+        s = self.get_fdu_run_instance_selector(sysid, tenantid, instanceid, env)
         res = self.ws.get(s)
         if len(res) == 0:
             raise ValueError('Empty data on run_fdu_in_node')
@@ -1516,10 +1534,15 @@ class LAD(object):
             [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
             'instances','*','info'])
 
-    def get_node_fdu_instance_run_selector(self, nodeid, instanceid):
+    def get_node_fdu_instance_start_selector(self, nodeid, instanceid, env):
         return Constants.create_path(
             [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
-                'instances', instanceid, 'run'])
+                'instances', instanceid, 'start','?(env={})'.format(env)])
+
+    def get_node_fdu_instance_run_selector(self, nodeid, instanceid, env):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
+                'instances', instanceid, 'run','?(env={})'.format(env)])
 
     def get_node_fdu_instance_log_selector(self, nodeid, instanceid):
         return Constants.create_path(
@@ -1535,6 +1558,11 @@ class LAD(object):
         return Constants.create_path(
             [self.prefix, nodeid, 'runtimes', '*', 'fdu', '*',
                 'instances', instanceid, 'get', '?(filename={})'.format(filename)])
+
+    def get_node_fdu_instance_start_path (self, nodeid, pluginid, fduid, instanceid):
+        return Constants.create_path(
+            [self.prefix, nodeid, 'runtimes',pluginid, 'fdu', fduid,
+                'instances', instanceid, 'start'])
 
     def get_node_fdu_instance_run_path (self, nodeid, pluginid, fduid, instanceid):
         return Constants.create_path(
@@ -1761,11 +1789,26 @@ class LAD(object):
         self.evals.append(p)
         return r
 
+    def add_plugin_fdu_start_eval(self, nodeid, pluginid, fduid, instanceid, func):
+        p = self.get_node_fdu_instance_start_path(nodeid, pluginid, fduid, instanceid)
+        def cb(path, properties):
+            try:
+                v = Value(json.dumps(func(properties['env'])), encoding=Encoding.STRING)
+                return v
+            except Exception as e:
+                return Value('{"error":{}}'.format(e), encoding=Encoding.STRING)
+        r = self.ws.register_eval(p, cb)
+        self.evals.append(p)
+        return r
+
     def add_plugin_fdu_run_eval(self, nodeid, pluginid, fduid, instanceid, func):
         p = self.get_node_fdu_instance_run_path(nodeid, pluginid, fduid, instanceid)
         def cb(path, properties):
-            v = Value(json.dumps(func(None)), encoding=Encoding.STRING)
-            return v
+            try:
+                v = Value(json.dumps(func(properties['env'])), encoding=Encoding.STRING)
+                return v
+            except Exception as e:
+                return Value('{"error":{}}'.format(e), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
@@ -1795,9 +1838,15 @@ class LAD(object):
                 v = Value(json.dumps(func(properties['filename'])), encoding=Encoding.STRING)
                 return v
             except Exception as e:
-                return Value("", encoding=Encoding.STRING)
+                return Value('{"error":{}}'.format(e), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
+        return r
+
+    def remove_plugin_fdu_start_eval(self, nodeid, pluginid, fduid, instanceid):
+        p = self.get_node_fdu_instance_start_path(nodeid, pluginid, fduid, instanceid)
+        r = self.ws.unregister_eval(p)
+        self.evals.remove(p)
         return r
 
     def remove_plugin_fdu_run_eval(self, nodeid, pluginid, fduid, instanceid):
