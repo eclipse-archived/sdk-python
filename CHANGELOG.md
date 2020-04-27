@@ -1,10 +1,11 @@
 ## master
 
-- 8c58294 gabrik	Thu Apr 23 08:54:56 2020 +0200	added functions for fdu.run and file retrieval
-- 5fecc7c Gabriele Baldoni	Fri Mar 27 15:25:03 2020 +0100	Second iteration in network namespace and interface management functions (#12)
-- 7b21fc7 Gabriele Baldoni	Tue Mar 24 14:36:05 2020 +0100	Updates to enable ROS2 integration and network namespace and virtual interface management functions (#10)
-- 6dc2c2a gabrik  Fri Mar 20 08:31:18 2020 +0100  Added ROS2 in yang models enum hv_kind
-- b01433a gabrik  Thu Mar 19 16:22:56 2020 +0100  adding get_fdu_descriptor function to Plugin.Agent
+ - f20d1b0 gabrik  Mon Apr 27 14:35:14 2020 +0200  fix error propagation is evals
+ - cde7c1d gabrik  Mon Apr 27 12:13:25 2020 +0200  setting None in object fields in contructor for FDU and InfraFDU for not used fields
+ - b1c3614 gabrik  Mon Apr 27 09:49:57 2020 +0200  Added path/selector generator and eval registration for FDU.run and FDU.start
+ - 4005f4d Gabriele Baldoni        Fri Apr 24 11:49:21 2020 +0200  Blocking run of FDU, getting Log, file listing and file content  (#13)
+ - 5fecc7c Gabriele Baldoni        Fri Mar 27 15:25:03 2020 +0100  Second iteration in network namespace and interface management functions (#12)
+ - 7b21fc7 Gabriele Baldoni        Tue Mar 24 14:36:05 2020 +0100  Updates to enable ROS2 integration and network namespace and virtual interface management functions (#10)
 
 ## 0.1.0
 
