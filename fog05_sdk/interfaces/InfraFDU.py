@@ -43,23 +43,23 @@ class InfraFDU(object):
         self.uuid = None
         self.fdu_id = None
         self.status = None
-        self.image = {}
-        self.command = {}
+        self.image = None
+        self.command = None
         self.storage = []
-        self.computation_requirements = {}
-        self.geographical_requirements = {}
-        self.energy_requirements = {}
+        self.computation_requirements = None
+        self.geographical_requirements = None
+        self.energy_requirements = None
         self.hypervisor = None
         self.migration_kind = None
-        self.configuration = {}
+        self.configuration = None
         self.interfaces = []
         self.io_ports = []
         self.connection_points = []
         self.depends_on = []
         self.error_code = None
         self.error_msg = None
-        self.migration_properties = {}
-        self.hypervisor_info = {}
+        self.migration_properties = None
+        self.hypervisor_info = None
 
         if data is not None:
             # data = json.loads(data)
