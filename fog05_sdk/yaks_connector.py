@@ -1727,8 +1727,11 @@ class LAD(object):
         p = self.get_node_os_exec_path(nodeid, func_name)
 
         def cb(path, properties):
-            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
-            return v
+            try:
+                v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
+                return v
+            except Exception as e:
+                return Value(json.dumps({'error':'{}'.format(e)}), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
@@ -1755,8 +1758,11 @@ class LAD(object):
         p = self.get_node_nw_exec_path(nodeid, nm_uuid, func_name)
 
         def cb(path, properties):
-            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
-            return v
+            try:
+                v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
+                return v
+            except Exception as e:
+                return Value(json.dumps({'error':'{}'.format(e)}), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
@@ -1783,8 +1789,11 @@ class LAD(object):
         p = self.get_node_plugin_eval_path(nodeid, pluginid, func_name)
 
         def cb(path, properties):
-            v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
-            return v
+            try:
+                v = Value(json.dumps(func(**properties)), encoding=Encoding.STRING)
+                return v
+            except Exception as e:
+                return Value(json.dumps({'error':'{}'.format(e)}), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
@@ -1796,7 +1805,7 @@ class LAD(object):
                 v = Value(json.dumps(func(properties['env'])), encoding=Encoding.STRING)
                 return v
             except Exception as e:
-                return Value('{"error":{}}'.format(e), encoding=Encoding.STRING)
+                return Value(json.dumps({'error':'{}'.format(e)}), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
@@ -1808,7 +1817,7 @@ class LAD(object):
                 v = Value(json.dumps(func(properties['env'])), encoding=Encoding.STRING)
                 return v
             except Exception as e:
-                return Value('{"error":{}}'.format(e), encoding=Encoding.STRING)
+                return Value(json.dumps({'error':'{}'.format(e)}), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
@@ -1838,7 +1847,7 @@ class LAD(object):
                 v = Value(json.dumps(func(properties['filename'])), encoding=Encoding.STRING)
                 return v
             except Exception as e:
-                return Value('{"error":{}}'.format(e), encoding=Encoding.STRING)
+                return Value(json.dumps({'error':'{}'.format(e)}), encoding=Encoding.STRING)
         r = self.ws.register_eval(p, cb)
         self.evals.append(p)
         return r
