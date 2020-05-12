@@ -235,6 +235,13 @@ class GAD(object):
                                       'nodes', nodeid, 'fdu', fduid, 'instances',
                                       instid, 'get'])
 
+    # Scheduler
+
+    def get_fdu_scheduler_selector(self, sysid, tenantid, nodeid, fdu):
+        return Constants.create_path([self.prefix, sysid, 'tenants', tenantid,
+                                      'nodes', nodeid, 'agent', 'exec','schedule',
+                                    '?(fdu_id={})'.format(fdu)])
+
     # Networks
 
     def get_all_networks_selector(self, sysid, tenantid):
@@ -1333,83 +1340,12 @@ class GAD(object):
         else:
             return json.loads(res[0].get_value().get_value())
 
-    def onboard_ae_from_node(self, sysid, tenantid, nodeid, ae_info):
-        fname = 'onboard_ae'
-        params = {'descriptor': ae_info}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+    # Scheduler
+    def schedule_fdu_from_node(self, sysid, tenantid, nodeid, fduid):
+        s = self.get_fdu_scheduler_selector(sysid, tenantid, nodeid, fduid)
         res = self.ws.get(s)
         if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def instantiate_ae_from_node(self, sysid, tenantid, nodeid, ae_id):
-        fname = 'instantiate_ae'
-        params = {'ae_id': ae_id}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def offload_ae_from_node(self, sysid, tenantid, nodeid, ae_id):
-        fname = 'offload_ae'
-        params = {'ae_id': ae_id}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def terminate_ae_from_node(self, sysid, tenantid, nodeid, ae_inst_id):
-        fname = 'terminate_ae'
-        params = {'instance_id': ae_inst_id}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def onboard_entity_from_node(self, sysid, tenantid, nodeid, e_info):
-        fname = 'onboard_entity'
-        params = {'descriptor': e_info}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def instantiate_entity_from_node(self, sysid, tenantid, nodeid, e_id):
-        fname = 'instantiate_entity'
-        params = {'entity_id': e_id}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def offload_entity_from_node(self, sysid, tenantid, nodeid, e_id):
-        fname = 'offload_entity'
-        params = {'entity_id': e_id}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
-        else:
-            return json.loads(res[0].get_value().get_value())
-
-    def terminate_entity_from_node(self, sysid, tenantid, nodeid, e_inst_id):
-        fname = 'terminate_entity'
-        params = {'instance_id': e_inst_id}
-        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
-        res = self.ws.get(s)
-        if len(res) == 0:
-            raise ValueError('Empty data on exec_agent_eval')
+            raise ValueError('Empty data on file_fdu_in_node')
         else:
             return json.loads(res[0].get_value().get_value())
 
