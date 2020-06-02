@@ -966,7 +966,7 @@ class GAD(object):
         kvs = self.ws.get(p)
         d = []
         for k in kvs:
-            d.append(json.loads(k[1].get_value()))
+            d.append(json.loads(k.get_value()))
         return d
 
     def add_network(self, sysid, tenantid, netid, netinfo):
