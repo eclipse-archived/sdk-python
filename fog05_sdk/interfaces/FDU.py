@@ -60,7 +60,7 @@ class FDU(object):
         self.connection_points = []
         self.depends_on = []
         if data is not None:
-            pybindJSONDecoder.load_ietf_json({'fdu_descriptor':data}, None, None, obj=self.fdu)
+            pybindJSONDecoder.load_ietf_json({'fdu_descriptor':data}, None, None, obj=self.fdu, skip_unknown=True)
             self.enforce()
 
             self.id = self.fdu.fdu_descriptor.id
@@ -126,7 +126,7 @@ class FDU(object):
             'depends_on': self.depends_on,
         }
         check_obj = user_fdu.user_fdu()
-        pybindJSONDecoder.load_ietf_json({'fdu_descriptor':data}, None, None, obj=check_obj)
+        pybindJSONDecoder.load_ietf_json({'fdu_descriptor':data}, None, None, obj=check_obj, skip_unknown=True)
         return data
 
     def get_uuid(self):

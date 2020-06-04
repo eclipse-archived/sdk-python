@@ -51,7 +51,7 @@ class AtomicEntityRecord(object):
             xs = list(map(conv, cdata['connection_points']))
             cdata['connection_points'] = xs
 
-            pybindJSONDecoder.load_ietf_json({'ae_record':cdata}, None, None, obj=self.ae)
+            pybindJSONDecoder.load_ietf_json({'ae_record':cdata}, None, None, obj=self.ae, skip_unknown=True)
             self.enforce()
 
             self.atomic_entity_id = self.ae.ae_record.atomic_entity_id
@@ -91,7 +91,7 @@ class AtomicEntityRecord(object):
         xs = list(map(conv, cdata['connection_points']))
         cdata['connection_points'] = xs
 
-        pybindJSONDecoder.load_ietf_json({'ae_record':cdata}, None, None, obj=check_obj)
+        pybindJSONDecoder.load_ietf_json({'ae_record':cdata}, None, None, obj=check_obj, skip_unknown=True)
         return data
 
     def get_uuid(self):

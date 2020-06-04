@@ -41,7 +41,7 @@ class Entity(object):
         self.atomic_entities = []
         self.virtual_links = []
         if data is not None:
-            pybindJSONDecoder.load_ietf_json({'entity_descriptor':data}, None, None, obj=self.e)
+            pybindJSONDecoder.load_ietf_json({'entity_descriptor':data}, None, None, obj=self.e, skip_unknown=True)
             self.enforce()
 
             self.id = self.e.entity_descriptor.id
@@ -72,7 +72,7 @@ class Entity(object):
             'virtual_links': self.virtual_links
         }
         check_obj = user_entity.user_entity()
-        pybindJSONDecoder.load_ietf_json({'entity_descriptor':data}, None, None, obj=check_obj)
+        pybindJSONDecoder.load_ietf_json({'entity_descriptor':data}, None, None, obj=check_obj, skip_unknown=True)
         return data
 
     def get_uuid(self):

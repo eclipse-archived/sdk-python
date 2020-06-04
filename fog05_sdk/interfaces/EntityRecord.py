@@ -40,7 +40,7 @@ class EntityRecord(object):
         self.atomic_entities = []
         self.virtual_links = []
         if data is not None:
-            pybindJSONDecoder.load_ietf_json({'entity_record':data}, None, None, obj=self.e)
+            pybindJSONDecoder.load_ietf_json({'entity_record':data}, None, None, obj=self.e, skip_unknown=True)
             self.enforce()
 
             self.entity_id = self.e.entity_record.entity_id
@@ -67,7 +67,7 @@ class EntityRecord(object):
             'virtual_links': self.virtual_links
         }
         check_obj = infra_entity.infra_entity()
-        pybindJSONDecoder.load_ietf_json({'entity_record':data}, None, None, obj=check_obj)
+        pybindJSONDecoder.load_ietf_json({'entity_record':data}, None, None, obj=check_obj, skip_unknown=True)
         return data
 
     def get_uuid(self):

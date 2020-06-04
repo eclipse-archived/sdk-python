@@ -65,7 +65,7 @@ class InfraFDU(object):
             # data = json.loads(data)
             if isinstance(data['hypervisor_info'], dict):
                 data.update({'hypervisor_info':json.dumps(data['hypervisor_info'])})
-            pybindJSONDecoder.load_ietf_json({'fdu_record':data}, None, None, obj=self.fdu)
+            pybindJSONDecoder.load_ietf_json({'fdu_record':data}, None, None, obj=self.fdu, skip_unknown=True)
             self.enforce()
             while isinstance(data['hypervisor_info'], str):
                 data.update({'hypervisor_info':json.loads(data['hypervisor_info'])})
@@ -146,7 +146,7 @@ class InfraFDU(object):
             'hypervisor_info': self.hypervisor_info
         }
         check_obj = infra_fdu.infra_fdu()
-        pybindJSONDecoder.load_ietf_json({'fdu_record':data.update({'hypervisor_info':json.dumps(data['hypervisor_info'])})}, None, None, obj=check_obj)
+        pybindJSONDecoder.load_ietf_json({'fdu_record':data.update({'hypervisor_info':json.dumps(data['hypervisor_info'])})}, None, None, obj=check_obj, skip_unknown=True)
         data.update({'hypervisor_info':json.loads(data['hypervisor_info'])})
         return data
 
