@@ -1370,6 +1370,66 @@ class GAD(object):
         else:
             return json.loads(res[0].get_value().get_value())
 
+    def attach_interface_to_bridge_node(self, sysid, tenantid, nodeid, intf_name, br_name):
+        fname = 'node_interface_to_bridge'
+        params = {'intf_name': intf_name, 'br_name':br_name}
+        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on attach_interface_to_bridge_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def detach_interface_to_bridge_node(self, sysid, tenantid, nodeid, intf_name):
+        fname = 'node_interface_no_bridge'
+        params = {'intf_name': intf_name}
+        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on detach_interface_to_bridge_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def create_bridge_in_node(self, sysid, tenantid, nodeid, brname):
+        fname = 'node_create_bridge'
+        params = {'brname': brname}
+        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on create_bridge_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def remove_bridge_from_node(self, sysid, tenantid, nodeid, brname, netns='1'):
+        fname = 'node_remove_bridge'
+        params = {'intf_name': brname}
+        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on remove_bridge_from_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def create_vxlan_in_node(self, sysid, tenantid, nodeid, vni, mcast, port, master):
+        fname = 'node_create_vxlan'
+        params = {'vni': vni, 'mcast_group':mcast, 'port':port, 'master_intf': master}
+        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on create_vxlan_in_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
+    def remove_vxlan_from_node(self, sysid, tenantid, nodeid, intf_name):
+        fname = 'node_delete_vxlan'
+        params = {'intf_name': intf_name}
+        s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
+        res = self.ws.get(s)
+        if len(res) == 0:
+            raise ValueError('Empty data on remove_bridge_from_node')
+        else:
+            return json.loads(res[0].get_value().get_value())
+
 
 class LAD(object):
     def __init__(self, workspace, prefix):
