@@ -1350,9 +1350,9 @@ class GAD(object):
             return json.loads(res[0].get_value().get_value())
 
 
-    def create_network_in_node(self, sysid, tenantid, nodeid, net_info):
+    def create_network_in_node(self, sysid, tenantid, nodeid, net_id):
         fname = 'create_node_network'
-        params = {'descriptor': json.dumps(net_info)}
+        params = {'net_id': net_id}
         s = self.get_agent_exec_path_with_params(sysid, tenantid, nodeid, fname, params)
         res = self.ws.get(s)
         if len(res) == 0:
