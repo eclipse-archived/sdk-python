@@ -4,7 +4,9 @@
 [![Documentation Status](https://readthedocs.org/projects/eclipse-fog05-python3-sdk/badge/?version=latest)](https://eclipse-fog05-python3-sdk.readthedocs.io/en/latest/?badge=latest)
 [![Build Status](https://travis-ci.com/eclipse-fog05/sdk-python.svg?branch=master)](https://travis-ci.com/eclipse-fog05/sdk-python)
 
-# Eclispe fog05 SDK Python
+# Eclipse fog05 SDK Python
+
+THIS REPOSITORY HAS BEEN ARCHIVED.
 
 This repository contains the Eclipse fog05 SDK for Python
 
